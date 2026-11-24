@@ -31,6 +31,9 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
               <NavItem tag={RRNavLink} to="/userProfiles">
                 Users
               </NavItem>
+              <NavItem tag={RRNavLink} to="/chores">
+                Chores
+              </NavItem>
             </Collapse>
             <Button
               color="primary"

@@ -38,25 +38,34 @@ public class UserProfileController : ControllerBase
             })
             .ToList());
     }
+    
     [HttpGet("{id}")]
-    [Authorize]
-    public IActionResult GetUserById()
+    [Authorize(Roles = "Admin")]
+    public IActionResult GetUserById(int id)
     {
-        return Ok(_dbContext.UserProfiles
+        UserProfile userProfileToReturn = _dbContext.UserProfiles
         .Include(up => up.ChoreAssignments)
             .ThenInclude(ac => ac.Chore)
         .Include(up => up.ChoreCompletions)
             .ThenInclude(cc => cc.Chore)
-        .Select(up => new UserProfileDTO
+        .Include(up=> up.IdentityUser)
+        .Where(up=> up.Id == id).FirstOrDefault();
+
+        if (userProfileToReturn == null)
         {
-            Id = up.Id,
-            FirstName = up.FirstName,
-            LastName = up.LastName,
-            Address = up.Address,
-            IdentityUserId = up.IdentityUserId,
-            ChoreAssignments = up.ChoreAssignments,
-            ChoreCompletions = up.ChoreCompletions
-        })
-        );
+            return (NotFound());
+        }
+
+        return Ok(new UserProfileDTO
+        {
+            Id=userProfileToReturn.Id,
+            FirstName=userProfileToReturn.FirstName,
+            LastName=userProfileToReturn.LastName,
+            Address=userProfileToReturn.Address,
+            IdentityUserId=userProfileToReturn.IdentityUserId,
+            IdentityUser=userProfileToReturn.IdentityUser,
+            ChoreAssignments=userProfileToReturn.ChoreAssignments,
+            ChoreCompletions=userProfileToReturn.ChoreCompletions
+        });
     }
 }

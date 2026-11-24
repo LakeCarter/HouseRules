@@ -5,6 +5,7 @@ import Register from "./auth/Register"
 import { Home } from "./Home.jsx"
 import { UserProfileList } from "./UserProfileList.jsx"
 import { UserProfileDetails } from "./UserProfileDetails.jsx"
+import { ChoreList } from "./ChoreList.jsx"
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -18,7 +19,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             </AuthorizedRoute>
           }
         />
-        <Route path="/userProfiles">
+        <Route path="userProfiles">
           <Route
             index
             element={
@@ -35,6 +36,16 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               </AuthorizedRoute>
             }
           />
+        </Route>
+
+        <Route path="/chores">
+            <Route 
+            index
+            element={
+          <AuthorizedRoute loggedInUser={loggedInUser}>
+            <ChoreList/>
+          </AuthorizedRoute>
+        }/>
         </Route>
 
         <Route

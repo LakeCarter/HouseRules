@@ -327,7 +327,7 @@ namespace HouseRules.Migrations
                             Email = "admina@strator.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEIGidBwK8T5+JOiRhj9EdOEUmHT0Rc5MeCMuo6jwZto925qz4gsKy3AX6EBywApJeg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFFdUCEHP1rurNmKHJEaxhPM1g+57QKDplj/6AdK1LTFeqtIz7QR7E3zzWMu7kUtvw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "e2b4f6a8-1c3d-4e5f-8a9b-0c1d2e3f4a5b",
                             TwoFactorEnabled = false,
@@ -426,7 +426,7 @@ namespace HouseRules.Migrations
             modelBuilder.Entity("HouseRules.Models.ChoreAssignment", b =>
                 {
                     b.HasOne("HouseRules.Models.Chore", "Chore")
-                        .WithMany()
+                        .WithMany("ChoreAssignments")
                         .HasForeignKey("ChoreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -445,7 +445,7 @@ namespace HouseRules.Migrations
             modelBuilder.Entity("HouseRules.Models.ChoreCompletion", b =>
                 {
                     b.HasOne("HouseRules.Models.Chore", "Chore")
-                        .WithMany()
+                        .WithMany("ChoreCompletions")
                         .HasForeignKey("ChoreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -521,6 +521,13 @@ namespace HouseRules.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HouseRules.Models.Chore", b =>
+                {
+                    b.Navigation("ChoreAssignments");
+
+                    b.Navigation("ChoreCompletions");
                 });
 
             modelBuilder.Entity("HouseRules.Models.UserProfile", b =>

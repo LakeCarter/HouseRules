@@ -9,15 +9,17 @@ export const UserProfileDetails = () => {
 
   useEffect(() => {
     getUserProfilesById(userProfileId).then(setUserProfile)
-  }, [])
+  }, [userProfileId])
 
   return <div className="container">
     <h2>User Profile Details</h2>
     <Card color="dark" inverse>
         <CardBody>
-            <CardTitle tag={"h4"}>{userProfile.userName}</CardTitle>
-            <p>UserName: {userProfile.userName}</p>
-            <p>Name: {userProfile.firstName} {userProfile?.lastName}</p>
+            <CardTitle tag={"h4"}>{userProfile.identityUser?.userName}</CardTitle>
+            <p>UserName: {userProfile.identityUser?.userName}</p>
+            <p>Name: {userProfile?.firstName} {userProfile?.lastName}</p>
+            <p>Email: {userProfile.identityUser?.email}</p>
+            <p>Address: {userProfile.address}</p>
         </CardBody>
     </Card>
   </div>
